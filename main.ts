@@ -25,6 +25,10 @@ export async function startStreamableHTTPServer(
   const app = createMcpExpressApp({ host: "0.0.0.0" });
   app.use(cors());
 
+  app.get("/health", (_req: Request, res: Response) => {
+    res.status(200).json({ status: "ok" });
+  });
+
   app.all("/mcp", async (req: Request, res: Response) => {
     const server = createServer();
     const transport = new StreamableHTTPServerTransport({
